@@ -35,8 +35,9 @@ public class MyServiceA {
 	public void waitMethodParam() {
 		try {
 			/*
-			 * tryLock(long timeout,TimeUnit
-			 * unit)的作用是，如果锁定在给定等待时间内没有被另一个线程保持，且当前线程未被中断，则获取该锁定
+			 * tryLock(long timeout,TimeUnitunit)的作用是
+			 * 
+			 * 如果锁定在给定等待时间内没有被另一个线程保持，且当前线程未被中断，则获取该锁定
 			 */
 			if (lock.tryLock(3, TimeUnit.SECONDS)) {
 				System.out.println("★★★★★★★★★★" + Thread.currentThread().getName() + "获得锁的时间为：" + System.currentTimeMillis());

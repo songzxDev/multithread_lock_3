@@ -8,6 +8,7 @@
 */
 package cn.songzx.lock.lockinterruptibly.service;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -28,6 +29,27 @@ public class MyServiceA {
 			System.out.println(Thread.currentThread().getName() + "获得锁！");
 		} else {
 			System.out.println(Thread.currentThread().getName() + "没有获得锁！");
+		}
+	}
+
+	public void waitMethodParam() {
+		try {
+			/*
+			 * tryLock(long timeout,TimeUnit
+			 * unit)的作用是，如果锁定在给定等待时间内没有被另一个线程保持，且当前线程未被中断，则获取该锁定
+			 */
+			if (lock.tryLock(3, TimeUnit.SECONDS)) {
+				System.out.println("★★★★★★★★★★" + Thread.currentThread().getName() + "获得锁的时间为：" + System.currentTimeMillis());
+				Thread.sleep(10000L);
+			} else {
+				System.out.println("☆☆☆☆☆☆☆☆☆☆" + Thread.currentThread().getName() + "没有获得锁！");
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			if (lock.isHeldByCurrentThread()) {
+				lock.unlock();
+			}
 		}
 	}
 }
